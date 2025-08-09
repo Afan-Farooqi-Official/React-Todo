@@ -7,12 +7,15 @@ import TodoItem from './components/TodoItem'
 function App() {
   const [todos, setTodos] = useState([])
 
+  /*When you call setTodos with a function, React passes the current/previous state into that function,
+  and you return the new state from it. This is useful when your new state depends on the old state (like updating an item in a list).
+  */
   const addTodo = (todo) => {
     setTodos((prev) => [{id: Date.now(), ...todo}, ...prev])
   }
 
   const updateTodo = (id, todo) => {
-    setTodos((prev) => prev.map((prevTodo) => {prevTodo.id === id ? todo : prevTodo}))
+    setTodos((prev) => prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo)))
   }
 
   const deleteTodo = (id) => {
@@ -24,7 +27,7 @@ function App() {
   }
 
   useEffect(() => {
-    const todos = JSON.parse(localStorage.getItem('todos'))
+    const todos = JSON.parse(localStorage.getItem('todos')) 
     if (todos && todos.length > 0) {
       setTodos(todos)
     }
